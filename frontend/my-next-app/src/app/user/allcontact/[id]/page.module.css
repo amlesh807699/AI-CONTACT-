@@ -1,0 +1,89 @@
+/* Container for the page */
+.contactContainer {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 0 16px;
+  font-family: "Inter", sans-serif;
+}
+
+/* Page title */
+.contactContainer h1 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 24px;
+}
+
+/* Contact card */
+.contactCard {
+  background: #fff;
+  padding: 24px;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+.contactCard p {
+  font-size: 16px;
+  margin: 6px 0;
+  color: #374151;
+}
+
+.contactCard p b {
+  color: #111827;
+}
+
+/* Hover effect */
+.contactCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Loading text */
+.loadingText {
+  text-align: center;
+  font-size: 18px;
+  color: #4b5563;
+  margin-top: 80px;
+}
+
+/* Empty data text */
+.emptyText {
+  text-align: center;
+  font-size: 18px;
+  color: #9ca3af;
+  margin-top: 80px;
+}
+
+/* Error container */
+.errorContainer {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 20px;
+  text-align: center;
+  background: #fef2f2;
+  color: #b91c1c;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+}
+
+.errorContainer h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.errorContainer button {
+  padding: 10px 16px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.errorContainer button:hover {
+  opacity: 0.9;
+}

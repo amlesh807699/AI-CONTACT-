@@ -1,0 +1,25 @@
+:root {
+  --primary: #4f46e5;      /* Indigo */
+  --primary-dark: #4338ca;
+  --danger: #ef4444;
+  --bg: #f9fafb;
+  --card: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+button {
+  font-family: inherit;
+}

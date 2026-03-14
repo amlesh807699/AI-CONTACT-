@@ -1,0 +1,91 @@
+.searchContainer {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 16px;
+  font-family: "Inter", sans-serif;
+}
+
+.searchContainer h2 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #111827;
+}
+
+.searchBox {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.searchBox input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 16px;
+}
+
+.searchBox button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: #3b82f6;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.searchBox button:hover {
+  background: #2563eb;
+}
+
+.searchBox button:disabled {
+  background: #93c5fd;
+  cursor: not-allowed;
+}
+
+.errorText {
+  color: #b91c1c;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.loadingText {
+  text-align: center;
+  color: #374151;
+  margin-bottom: 10px;
+}
+
+.emptyText {
+  text-align: center;
+  color: #6b7280;
+  margin-top: 20px;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contactCard {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.contactCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.contactCard p {
+  margin: 4px 0;
+  color: #374151;
+}

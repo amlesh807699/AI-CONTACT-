@@ -1,0 +1,55 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background-color: #1f2937; /* dark grey */
+  color: #f9fafb; /* light text */
+  font-family: Arial, sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-logo a {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #f9fafb;
+  text-decoration: none;
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  gap: 16px;
+}
+
+.navbar-links a {
+  color: #f9fafb;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.navbar-links a:hover {
+  background-color: #374151; /* hover dark gray */
+}
+
+.navbar-links .active {
+  background-color: #2563eb; /* blue */
+}
+
+.logout-btn {
+  background-color: #ef4444; /* red */
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.logout-btn:hover {
+  background-color: #b91c1c; /* darker red */
+}
