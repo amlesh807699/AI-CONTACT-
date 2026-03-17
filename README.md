@@ -42,9 +42,9 @@ This project is a full-stack Contact Management System using Spring Boot for the
    * Works across devices and screen sizes
 ####usage
 
-#for login 
-<img width="100" height="100" alt="Screenshot 2026-02-25 210515" src="https://github.com/user-attachments/assets/bd029d2e-5255-4de3-9c61-760400640f75" />
-#otp verifucation after regisration
+# for login 
+<img width="1907" height="955" alt="Screenshot 2026-02-25 210515" src="https://github.com/user-attachments/assets/bd029d2e-5255-4de3-9c61-760400640f75" />
+# otp verifucation after regisration
 <img width="1907" height="955" alt="Screenshot 2026-03-14 160115" src="https://github.com/user-attachments/assets/83693f65-73db-4165-b107-494c5c39545c" />
 # dashboard for all
 <img width="1919" height="918" alt="Screenshot 2026-03-14 160225" src="https://github.com/user-attachments/assets/a17e9105-90d6-411b-ab4b-1c99a79aa05d" />
