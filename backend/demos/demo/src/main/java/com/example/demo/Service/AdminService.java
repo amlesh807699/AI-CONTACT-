@@ -12,7 +12,9 @@ import java.util.List;
 public class AdminService {
 
     private final UserRepo userRepo;
-
+ public UserRepo getUserRepo() {
+        return userRepo;
+    }
     // ✅ RETURN ALL USERS
     public List<User> allUsers() {
         return userRepo.findAll();
