@@ -14,14 +14,21 @@ import java.util.regex.Pattern;
 public class AiService {
 
     private final Client geminiClient;
-
-    public AiService(@Value("${gemini.api.key}") String apiKey) {
-    if(apiKey == null || apiKey.isEmpty()) {
-        throw new IllegalArgumentException("gemini.api.key env variable missing!");
+    
+ public AiService(@Value("${gemini.api.key:}") String apiKey) {
+        if (apiKey == null || apiKey.isEmpty()) {
+            System.out.println("WARNING: gemini.api.key not set, AI features disabled.");
+            this.geminiClient = null;
+        } else {
+            System.setProperty("GOOGLE_API_KEY", apiKey);
+            this.geminiClient = new Client();
+        }
     }
-    System.setProperty("GOOGLE_API_KEY", apiKey);
-    this.geminiClient = new Client();
-}
+
+    public Client getGeminiClient() {
+        return geminiClient;
+    }
+
 
     public Client getGeminiClient() {
         return geminiClient;
