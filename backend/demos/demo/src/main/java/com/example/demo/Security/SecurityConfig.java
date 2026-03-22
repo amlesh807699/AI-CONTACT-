@@ -20,6 +20,13 @@ public class SecurityConfig {
 
     @Autowired
     private JwtFilter jwtFilter;
+     public JwtFilter getJwtFilter() {
+        return jwtFilter;
+    }
+
+    public void setJwtFilter(JwtFilter jwtFilter) {
+        this.jwtFilter = jwtFilter;
+    }
 
 
     @Bean
