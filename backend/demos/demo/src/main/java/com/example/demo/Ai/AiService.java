@@ -15,9 +15,11 @@ public class AiService {
 
     private final Client geminiClient;
 
-   public AiService(@Value("${gemini.api.key}") String apiKey) {
+ public AiService(@Value("${gemini.api.key:}") String apiKey) {
     if(apiKey == null || apiKey.isEmpty()) {
-        throw new IllegalArgumentException("gemini.api.key env variable missing!");
+        throw new IllegalStateException(
+            "gemini.api.key is missing! Set it via environment variable or application.properties"
+        );
     }
     System.setProperty("GOOGLE_API_KEY", apiKey);
     this.geminiClient = new Client();
