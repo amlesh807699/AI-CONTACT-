@@ -1,12 +1,5 @@
-package com.example.demo.Entity;
-
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Entity
+@Table(name = "app_user")  // ⚡ H2 aur MySQL dono safe
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,6 +24,7 @@ public class User {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
+
     @Digits(integer = 6, fraction = 0, message = "OTP must be 6 digits")
     private Integer otp;
 
