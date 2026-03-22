@@ -40,10 +40,10 @@ public class Contact {
 
     @Size(max = 100, message = "Tags can be max 100 characters")
     private String tags;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    @NotNull(message = "User is required")
-    @JsonIgnore
-    private User user;
+    
+@ManyToOne(fetch = FetchType.LAZY)
+@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+@NotNull(message = "User is required")
+@JsonIgnore
+private User user;
 }
