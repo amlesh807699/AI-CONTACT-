@@ -44,6 +44,6 @@ public class Contact {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @NotNull(message = "User is required")
-    @JsonIgnore   // ⭐⭐ THIS LINE FIXES YOUR ERROR
+    @JsonIgnore
     private User user;
 }
