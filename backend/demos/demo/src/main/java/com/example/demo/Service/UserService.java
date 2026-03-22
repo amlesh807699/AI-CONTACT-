@@ -19,6 +19,18 @@ public class UserService {
     private final UserRepo userRepo;
     private final ContectRepo contectRepo;
     private final AiService aiService; // Inject your AI service
+    public UserRepo getUserRepo() {
+        return userRepo;
+    }
+
+    public ContectRepo getContectRepo() {
+        return contectRepo;
+    }
+
+    public AiService getAiService() {
+        return aiService;
+    }
+
 
     // ---------------------- Get all contacts for a user ----------------------
     public List<Contact> getContect(String email) {
