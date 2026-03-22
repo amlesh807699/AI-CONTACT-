@@ -21,7 +21,7 @@ public class AiService {
             "gemini.api.key is missing! Set it via environment variable or application.properties"
         );
     }
-    System.setProperty("GOOGLE_API_KEY", apiKey);
+    
     this.geminiClient = new Client();
 }
 
