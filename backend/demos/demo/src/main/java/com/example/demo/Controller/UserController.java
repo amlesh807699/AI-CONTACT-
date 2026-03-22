@@ -98,4 +98,7 @@ public class UserController {
         String email = (String) request.getAttribute("email");
         return ResponseEntity.ok(userService.search(query, email));
     }
+         public UserService getUserService() {
+        return userService;
+    }
 }
