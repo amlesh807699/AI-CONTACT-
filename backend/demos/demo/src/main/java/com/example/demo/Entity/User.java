@@ -1,3 +1,11 @@
+package com.example.demo.Entity;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "app_user")  // ⚡ H2 aur MySQL dono safe
 @Data
