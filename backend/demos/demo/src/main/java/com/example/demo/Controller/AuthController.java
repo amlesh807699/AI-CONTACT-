@@ -135,4 +135,19 @@ public class AuthController {
         msg.setText("Your OTP is: " + otp);
         mailSender.send(msg);
     }
+        public UserRepo getUserRepo() {
+        return userRepo;
+    }
+
+    public PasswordEncoder getPasswordEncoder() {
+        return passwordEncoder;
+    }
+
+    public Jwtutils getJwtutils() {
+        return jwtutils;
+    }
+
+    public JavaMailSender getMailSender() {
+        return mailSender;
+    }
 }
