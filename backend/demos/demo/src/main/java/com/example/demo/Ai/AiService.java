@@ -15,13 +15,13 @@ public class AiService {
 
     private final Client geminiClient;
 
-    public AiService(@Value("${gemini.api.key}") String apiKey) {
-        // Spring Boot property se system property set karo
-        System.setProperty("GOOGLE_API_KEY", apiKey);
-
-        // Ab Google client ko key mil gayi
-        this.geminiClient = new Client();
+   public AiService(@Value("${gemini.api.key}") String apiKey) {
+    if(apiKey == null || apiKey.isEmpty()) {
+        throw new IllegalArgumentException("gemini.api.key env variable missing!");
     }
+    System.setProperty("GOOGLE_API_KEY", apiKey);
+    this.geminiClient = new Client();
+}
 
     public Client getGeminiClient() {
         return geminiClient;
