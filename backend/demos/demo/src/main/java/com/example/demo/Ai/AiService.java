@@ -14,21 +14,14 @@ import java.util.regex.Pattern;
 public class AiService {
 
     private final Client geminiClient;
-    
- public AiService(@Value("${gemini.api.key:}") String apiKey) {
-        if (apiKey == null || apiKey.isEmpty()) {
-            System.out.println("WARNING: gemini.api.key not set, AI features disabled.");
-            this.geminiClient = null;
-        } else {
-            System.setProperty("GOOGLE_API_KEY", apiKey);
-            this.geminiClient = new Client();
-        }
-    }
 
-    public Client getGeminiClient() {
-        return geminiClient;
-    }
+    public AiService(@Value("${gemini.api.key}") String apiKey) {
+        // Spring Boot property se system property set karo
+        System.setProperty("GOOGLE_API_KEY", apiKey);
 
+        // Ab Google client ko key mil gayi
+        this.geminiClient = new Client();
+    }
 
     public Client getGeminiClient() {
         return geminiClient;
@@ -91,6 +84,7 @@ public class AiService {
                         "Query: \"" + query + "\"";
         return generate(prompt);
     }
+
 
 
 
