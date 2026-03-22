@@ -26,6 +26,21 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
     private UserRepo userRepo;
+     public Jwtutils getJwtutils() {
+        return jwtutils;
+    }
+
+    public void setJwtutils(Jwtutils jwtutils) {
+        this.jwtutils = jwtutils;
+    }
+
+    public UserRepo getUserRepo() {
+        return userRepo;
+    }
+
+    public void setUserRepo(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
 
     @Override
     protected void doFilterInternal(
