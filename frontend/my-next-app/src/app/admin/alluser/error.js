@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import styles from "../page.module.css"; // adjust the path if needed
+ // adjust the path if needed
 
 export default function Error({ error, reset }) {
   const router = useRouter();
