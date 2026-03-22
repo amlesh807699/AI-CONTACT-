@@ -9,7 +9,7 @@ ARG GEMINI_API_KEY
 ARG EMAIL_PASSWORD
 ARG DB_PASSWORD
 
-RUN mvn clean package -DskipTests
+RUN mvn clean package -DskipTests -Dmaven.compiler.forceJavacCompilerUse=true
 
 # Stage 2: Run
 FROM eclipse-temurin:21-jdk-jammy
