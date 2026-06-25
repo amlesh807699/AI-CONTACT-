@@ -1,12 +1,12 @@
 package com.example.demo.Service;
 
 import com.example.demo.Ai.AiService;
-import com.example.demo.Entity.Contact;import com.example.demo.Entity.Contact;
+import com.example.demo.Entity.Contact;
 import com.example.demo.Entity.User;
 import com.example.demo.Repo.ContectRepo;
 import com.example.demo.Repo.UserRepo;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,73 +14,170 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
 
     private final UserRepo userRepo;
     private final ContectRepo contectRepo;
-    private final AiService aiService; // Inject your AI service
+    private final AiService aiService;
+
+    public UserRepo getUserRepo() {
+        log.debug("Returning UserRepo instance");
+        return userRepo;
+    }
+
+    public ContectRepo getContectRepo() {
+        log.debug("Returning ContactRepo instance");
+        return contectRepo;
+    }
+
+    public AiService getAiService() {
+        log.debug("Returning AiService instance");
+        return aiService;
+    }
 
     // ---------------------- Get all contacts for a user ----------------------
     public List<Contact> getContect(String email) {
+
+        log.info("Fetching contacts for user email={}", email);
+
         User user = userRepo.findByEmail(email).orElse(null);
-        if (user == null) return List.of();
-        return contectRepo.findByUser(user);
+
+        if (user == null) {
+            log.warn("User not found while fetching contacts. email={}", email);
+            return List.of();
+        }
+
+        List<Contact> contacts = contectRepo.findByUser(user);
+
+        log.info("Fetched {} contacts for user={}", contacts.size(), email);
+
+        return contacts;
     }
 
     // ---------------------- Get contact by ID ----------------------
     public Contact getContactById(Long id, String email) {
+
+        log.info("Fetching contact id={} for user={}", id, email);
+
         Contact contact = contectRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Contact not found"));
+                .orElseThrow(() -> {
+                    log.error("Contact not found. id={}", id);
+                    return new RuntimeException("Contact not found");
+                });
 
         if (!contact.getUser().getEmail().equals(email)) {
+            log.warn("Unauthorized access attempt. ContactId={}, RequestedBy={}",
+                    id, email);
             throw new RuntimeException("Access denied");
         }
+
+        log.info("Contact fetched successfully. id={}", id);
 
         return contact;
     }
 
     // ---------------------- Get User by Email ----------------------
     public User getUserByEmail(String email) {
-        return userRepo.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        log.info("Fetching user by email={}", email);
+
+        User user = userRepo.findByEmail(email)
+                .orElseThrow(() -> {
+                    log.error("User not found. email={}", email);
+                    return new RuntimeException("User not found");
+                });
+
+        log.info("User found. email={}, id={}", user.getEmail(), user.getId());
+
+        return user;
     }
 
-
     // ---------------------- Add new contact with AI ----------------------
-    public Contact add(Contact contect) {
-        // 1️⃣ Duplicate check
-        boolean isDuplicate = aiService.duplicate(contect);
+    public Contact add(Contact contact) {
+
+        log.info("Adding new contact. email={}, name={}",
+                contact.getEmail(),
+                contact.getName());
+
+        // Duplicate check
+        log.info("Running AI duplicate detection");
+
+        boolean isDuplicate = aiService.duplicate(contact);
+
         if (isDuplicate) {
+            log.warn("Duplicate contact detected by AI. email={}",
+                    contact.getEmail());
             throw new RuntimeException("Duplicate contact detected by AI");
         }
 
-        // 2️⃣ Auto-tagging
-        String tags = aiService.autotag(contect.getName(), contect.getJobTitle(), contect.getCompany());
-        contect.setTags(tags);
+        log.info("AI duplicate check passed");
 
-        // 3️⃣ Save to DB
-        Contact savedContact = contectRepo.save(contect);
+        // Auto-tagging
+        log.info("Generating AI tags");
 
-        // 4️⃣ AI Insights & Reminders
+        String tags = aiService.autotag(
+                contact.getName(),
+                contact.getJobTitle(),
+                contact.getCompany()
+        );
+
+        contact.setTags(tags);
+
+        log.info("Generated tags={}", tags);
+
+        // Save
+        Contact savedContact = contectRepo.save(contact);
+
+        log.info("Contact saved successfully. id={}",
+                savedContact.getId());
+
+        // Insights
+        log.info("Generating AI insights");
+
         String insights = aiService.generateInsights(savedContact);
-        savedContact.setTags(savedContact.getTags() + ", " + insights); // or store insights separately
+
+        savedContact.setTags(savedContact.getTags() + ", " + insights);
+
+        log.info("Generated insights={}", insights);
 
         return savedContact;
     }
 
-    // ---------------------- Update contact with AI ----------------------
-    public Contact updateContact(Long id, Contact updatedContact, String email) {
-        Optional<Contact> optionalContect = contectRepo.findById(id);
-        if (optionalContect.isEmpty()) throw new RuntimeException("Contact not found");
+    // ---------------------- Update contact ----------------------
+    public Contact updateContact(Long id,
+                                 Contact updatedContact,
+                                 String email) {
 
-        Contact contact = optionalContect.get();
+        log.info("Updating contact id={} by user={}",
+                id,
+                email);
 
-        // Ensure the contact belongs to the logged-in user
-        if (!contact.getUser().getEmail().equals(email)) {
-            throw new RuntimeException("You are not allowed to update this contact");
+        Optional<Contact> optionalContact =
+                contectRepo.findById(id);
+
+        if (optionalContact.isEmpty()) {
+            log.error("Contact not found. id={}", id);
+            throw new RuntimeException("Contact not found");
         }
 
-        // Update fields
+        Contact contact = optionalContact.get();
+
+        if (!contact.getUser().getEmail().equals(email)) {
+
+            log.warn(
+                    "Unauthorized update attempt. ContactId={}, User={}",
+                    id,
+                    email
+            );
+
+            throw new RuntimeException(
+                    "You are not allowed to update this contact"
+            );
+        }
+
+        log.info("Updating contact fields");
+
         contact.setName(updatedContact.getName());
         contact.setEmail(updatedContact.getEmail());
         contact.setPhone(updatedContact.getPhone());
@@ -88,51 +185,112 @@ public class UserService {
         contact.setJobTitle(updatedContact.getJobTitle());
         contact.setCity(updatedContact.getCity());
 
-        // 1️⃣ Duplicate detection
+        // Duplicate detection
+        log.info("Running AI duplicate detection for update");
+
         if (aiService.duplicate(contact)) {
-            throw new RuntimeException("Duplicate contact detected by AI");
+
+            log.warn("Duplicate contact detected during update. id={}", id);
+
+            throw new RuntimeException(
+                    "Duplicate contact detected by AI"
+            );
         }
 
-        // 2️⃣ Auto-tagging
-        String tags = aiService.autotag(contact.getName(), contact.getJobTitle(), contact.getCompany());
+        log.info("AI duplicate check passed");
+
+        // Auto Tag
+        String tags = aiService.autotag(
+                contact.getName(),
+                contact.getJobTitle(),
+                contact.getCompany()
+        );
+
         contact.setTags(tags);
 
-        // 3️⃣ AI Insights & Reminders
-        String insights = aiService.generateInsights(contact);
-        contact.setTags(contact.getTags() + ", " + insights); // optional append insights
+        log.info("Generated tags={}", tags);
 
-        return contectRepo.save(contact);
+        // AI Insights
+        String insights = aiService.generateInsights(contact);
+
+        contact.setTags(contact.getTags() + ", " + insights);
+
+        log.info("Generated insights={}", insights);
+
+        Contact saved = contectRepo.save(contact);
+
+        log.info("Contact updated successfully. id={}",
+                saved.getId());
+
+        return saved;
     }
 
     // ---------------------- Delete contact ----------------------
     public void delete(Long id) {
+
+        log.info("Deleting contact id={}", id);
+
+        if (!contectRepo.existsById(id)) {
+            log.warn("Delete failed. Contact not found. id={}", id);
+            return;
+        }
+
         contectRepo.deleteById(id);
+
+        log.info("Contact deleted successfully. id={}", id);
     }
 
-    // ---------------------- Smart search (natural language) ----------------------
+    // ---------------------- Smart search ----------------------
     public List<Contact> search(String query, String email) {
+
+        log.info("Smart search started. Query='{}', User={}",
+                query,
+                email);
+
         User user = userRepo.findByEmail(email).orElse(null);
-        if (user == null) return List.of();
 
-        // 1️⃣ Get all user's contacts
-        List<Contact> contacts = contectRepo.findByUser(user);
+        if (user == null) {
 
-        // 2️⃣ Get AI JSON result
+            log.warn("Search failed. User not found={}",
+                    email);
+
+            return List.of();
+        }
+
+        List<Contact> contacts =
+                contectRepo.findByUser(user);
+
+        log.info("Found {} contacts for searching",
+                contacts.size());
+
         String aiResult = aiService.smartSearch(query);
 
-        // 3️⃣ Parse AI result to filter contacts
-        // Assume AI returns JSON like: {"name":"John","city":"Delhi","company":"XYZ"}
-        // For simplicity, let's filter manually
-        return contacts.stream()
+        log.info("AI Search Result={}", aiResult);
+
+        List<Contact> result = contacts.stream()
                 .filter(c -> {
                     String lowerAi = aiResult.toLowerCase();
-                    return (c.getName() != null && lowerAi.contains(c.getName().toLowerCase())) ||
-                            (c.getCity() != null && lowerAi.contains(c.getCity().toLowerCase())) ||
-                            (c.getCompany() != null && lowerAi.contains(c.getCompany().toLowerCase())) ||
-                            (c.getJobTitle() != null && lowerAi.contains(c.getJobTitle().toLowerCase())) ||
-                            (c.getTags() != null && lowerAi.contains(c.getTags().toLowerCase()));
+
+                    return (c.getName() != null &&
+                            lowerAi.contains(c.getName().toLowerCase()))
+                            ||
+                            (c.getCity() != null &&
+                                    lowerAi.contains(c.getCity().toLowerCase()))
+                            ||
+                            (c.getCompany() != null &&
+                                    lowerAi.contains(c.getCompany().toLowerCase()))
+                            ||
+                            (c.getJobTitle() != null &&
+                                    lowerAi.contains(c.getJobTitle().toLowerCase()))
+                            ||
+                            (c.getTags() != null &&
+                                    lowerAi.contains(c.getTags().toLowerCase()));
                 })
                 .toList();
-    }
 
+        log.info("Search completed. {} contacts matched.",
+                result.size());
+
+        return result;
+    }
 }

@@ -1,4 +1,4 @@
-"use client"; // ✅ MUST be at the very top
+"use client"; 
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -19,7 +19,7 @@ export default function Error({ error, reset }) {
         className={styles.deleteButton}
         onClick={() => {
           reset();
-          router.push("/admin/users"); // navigate back to users list
+          router.push("/admin/users"); 
         }}
       >
         Go Back

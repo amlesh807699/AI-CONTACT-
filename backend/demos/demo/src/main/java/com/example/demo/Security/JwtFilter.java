@@ -20,6 +20,21 @@ import java.util.List;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
+    public Jwtutils getJwtutils() {
+        return jwtutils;
+    }
+
+    public void setJwtutils(Jwtutils jwtutils) {
+        this.jwtutils = jwtutils;
+    }
+
+    public UserRepo getUserRepo() {
+        return userRepo;
+    }
+
+    public void setUserRepo(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
 
     @Autowired
     private Jwtutils jwtutils;

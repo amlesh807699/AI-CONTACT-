@@ -31,7 +31,7 @@ export default function RegisterPage() {
 
       const data = await res.text();
       if (!res.ok) {
-        setMessage(data || "❌ Invalid input");
+        setMessage(data || "Invalid input");
         return;
       }
 

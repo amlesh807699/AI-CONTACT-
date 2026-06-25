@@ -38,7 +38,7 @@ const Dashboard = () => {
   }, [router]);
 
   const handleLogout = () => {
-    // Clear cookies on backend if needed
+    
     router.push("/login");
   };
 

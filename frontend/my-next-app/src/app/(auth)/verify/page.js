@@ -13,11 +13,10 @@ const VerifyPage = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  // ✅ get email from localStorage
   useEffect(() => {
     const storedEmail = localStorage.getItem("verifyEmail");
     if (!storedEmail) {
-      setMessage("❌ Email not found. Please register again.");
+      setMessage(" Email not found. Please register again.");
       return;
     }
     setEmail(storedEmail);
@@ -39,18 +38,18 @@ const VerifyPage = () => {
 
       const data = await res.text();
       if (!res.ok) {
-        setMessage(data || "❌ Invalid OTP");
+        setMessage(data || " Invalid OTP");
         return;
       }
 
       // ✅ Success
       localStorage.removeItem("verifyEmail");
-      setMessage("✅ OTP verified successfully");
+      setMessage("OTP verified successfully");
       setSuccess(true);
 
       setTimeout(() => router.push("/login"), 2000);
     } catch (err) {
-      setMessage("Unable to verify OTP ❌");
+      setMessage("Unable to verify OTP ");
     } finally {
       setLoading(false);
     }
@@ -58,7 +57,7 @@ const VerifyPage = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Verify OTP 🔒</h2>
+      <h2 className={styles.title}>Verify OTP</h2>
 
       <form onSubmit={handleSubmit} className={styles.form}>
         <input

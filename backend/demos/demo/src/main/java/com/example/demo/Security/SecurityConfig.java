@@ -17,6 +17,13 @@ import java.util.List;
 
 @Configuration
 public class SecurityConfig {
+    public JwtFilter getJwtFilter() {
+        return jwtFilter;
+    }
+
+    public void setJwtFilter(JwtFilter jwtFilter) {
+        this.jwtFilter = jwtFilter;
+    }
 
     @Autowired
     private JwtFilter jwtFilter;

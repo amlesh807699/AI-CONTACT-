@@ -51,14 +51,14 @@ const AddContactPage = () => {
       const data = err.response?.data;
 
       if (!err.response || status >= 500) {
-        setMessage("❌ Contact service unavailable");
+        setMessage(" Contact service unavailable");
       } else if (status === 401) {
-        setMessage("❌ Session expired. Please login again.");
+        setMessage(" Session expired. Please login again.");
         router.push("/login");
       } else if (status === 403) {
-        setMessage("❌ You are not allowed to add contacts.");
+        setMessage(" You are not allowed to add contacts.");
       } else {
-        setMessage("❌ " + (data || "Invalid input"));
+        setMessage(" " + (data || "Invalid input"));
       }
 
     } finally {
@@ -132,11 +132,7 @@ const AddContactPage = () => {
         </button>
       </form>
 
-      {message && (
-        <p className={`${styles.message} ${success ? styles.success : ""}`}>
-          {message}
-        </p>
-      )}
+      
     </div>
   );
 };

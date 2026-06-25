@@ -39,4 +39,10 @@ public class Emails {
         String text = "Your OTP is: " + otp + "\nIt is valid for 10 minutes.";
         sendEmail(to, subject, text);
     }
+
+    public JavaMailSender getMailSender() {
+        return mailSender;
+    }
 }
+
+

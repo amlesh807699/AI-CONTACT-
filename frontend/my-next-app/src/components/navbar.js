@@ -11,10 +11,10 @@ export default function Navbar() {
   const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
-    // Initial role
+    
     setUserRole(localStorage.getItem("role"));
 
-    // Listen to custom event
+    
     const handleRoleChange = () => {
       setUserRole(localStorage.getItem("role"));
     };
@@ -30,7 +30,7 @@ export default function Navbar() {
     localStorage.removeItem("role");
     localStorage.removeItem("email");
 
-    // Dispatch event so navbar updates
+    
     window.dispatchEvent(new Event("roleChange"));
 
     router.push("/login");
@@ -39,7 +39,7 @@ export default function Navbar() {
   return (
     <nav className={styles.navbar}>
       <div className={styles["navbar-logo"]}>
-        <Link href="/">📇 ContactsApp</Link>
+        <Link href="/"> ContactsApp</Link>
       </div>
 
       <ul className={styles["navbar-links"]}>

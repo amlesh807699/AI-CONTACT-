@@ -12,6 +12,7 @@ import java.util.Date;
 @Component
 public class Jwtutils {
 
+
     private static final String MY_SECRET_KEY = "ThisIsAReallyStrongJWTSecretKeyForHS256Algo12345";
     private static final Integer EXPIRATION_TIME = 60 * 60 * 24 * 60;
 

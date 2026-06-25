@@ -45,7 +45,7 @@ export default function SearchContactsPage() {
 
   return (
     <div className={styles.searchContainer}>
-      <h2>Search Contacts 🔍</h2>
+      <h2>Search Contacts </h2>
 
       <div className={styles.searchBox}>
         <input
