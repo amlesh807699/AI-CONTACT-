@@ -1,6 +1,6 @@
 Project Title = AI contact manager
 
-######Description
+#Description
 This project is a full-stack Contact Management System using Spring Boot for the backend and Next.js for the frontend, supporting role-based authentication. Users can add, edit, and manage contacts with details like name, city, company, and job title. The system integrates AI moderation to flag misleading or suspicious contact data automatically. Admins have a dashboard to view users, delete accounts, and monitor AI-flagged contacts. It demonstrates secure authentication, AI-powered moderation, and full-stack CRUD operations in a real-world scenario
 .
 #####Features
