@@ -40,7 +40,7 @@ This project is a full-stack Contact Management System using Spring Boot for the
 
    * User-friendly interface built with Next.js
    * Works across devices and screen sizes
-####usage
+#usage
 
 #for login 
 <img width="1907" height="955" alt="Screenshot 2026-02-25 210515" src="https://github.com/user-attachments/assets/bd029d2e-5255-4de3-9c61-760400640f75" />
